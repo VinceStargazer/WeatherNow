@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Weather Now</string>
+    <string name="city_name">City Name</string>
+</resources>

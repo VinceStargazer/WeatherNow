@@ -37,7 +37,7 @@ public class WeatherRVAdaptor extends RecyclerView.Adapter<WeatherRVAdaptor.View
     public void onBindViewHolder(@NonNull WeatherRVAdaptor.ViewHolder holder, int position) {
         WeatherRVModal modal = weatherRVModalList.get(position);
         holder.temperatureTV.setText(modal.getTemperature().concat("°C"));
-        Picasso.get().load("http:".concat(modal.getIconURL())).into(holder.conditionTV);
+        Picasso.get().load("http:".concat(modal.getIconURL())).into(holder.conditionIV);
         holder.windTV.setText(modal.getWindSpeed().concat("kph"));
         SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         SimpleDateFormat output = new SimpleDateFormat("hh:mm aa");
@@ -55,16 +55,16 @@ public class WeatherRVAdaptor extends RecyclerView.Adapter<WeatherRVAdaptor.View
         return weatherRVModalList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView windTV, temperatureTV, timeTV;
-        private final ImageView conditionTV;
+        private final ImageView conditionIV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             windTV = itemView.findViewById(R.id.TVWindSpeed);
-            temperatureTV = itemView.findViewById(R.id.TVTemperature);
+            temperatureTV = itemView.findViewById(R.id.TVTemp);
             timeTV = itemView.findViewById(R.id.TVTime);
-            conditionTV = itemView.findViewById(R.id.TVCondition);
+            conditionIV = itemView.findViewById(R.id.IVCondition);
         }
     }
 }

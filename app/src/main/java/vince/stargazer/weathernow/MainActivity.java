@@ -42,8 +42,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private final String bgImgDay = "https://images.unsplash.com/photo-1597571092324-ae854e0648b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80",
-            bgImgNight = "https://images.unsplash.com/photo-1634242083752-323b6155c365?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80";
+    private final String bgImgDay = "https://images.unsplash.com/photo-1492615921011-dc481c1bee73?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+            bgImgNight = "https://images.unsplash.com/photo-1527842891421-42eec6e703ea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nzl8fG5pZ2h0JTIwc2t5fGVufDB8MXwwfHw%3D&auto=format&fit=crop&w=2000&q=60";
     private final int PERMISSION_CODE = 1;
     private RelativeLayout homeRL;
     private ProgressBar loadingPB;
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView iconIV;
     private ArrayList<WeatherRVModal> weatherRVModalList;
     private WeatherRVAdaptor weatherRVAdaptor;
-    private String weatherKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         homeRL = findViewById(R.id.RLHome);
         loadingPB = findViewById(R.id.PBLoading);
-        cityTV = findViewById(R.id.TILCity);
+        cityTV = findViewById(R.id.TVCity);
         temperatureTV = findViewById(R.id.TVTemperature);
         conditionTV = findViewById(R.id.TVCondition);
         RecyclerView weatherRV = findViewById(R.id.RVWeather);
@@ -84,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
                             Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_CODE);
         }
 
-        @SuppressLint("MissingPermission") Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        String cityName = getCityName(location.getLongitude(), location.getLatitude());
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        String cityName = location != null ? getCityName(location.getLongitude(), location.getLatitude()) : "Palo Alto";
         getWeatherInfo(cityName);
 
         searchIV.setOnClickListener(view -> {
@@ -138,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWeatherInfo(String cityName) {
-        String url = "http://api.weatherapi.com/v1/forecast.json?key=7d9babda0d8c49b3b2505417220811&q=" + cityName + "&aqi=no";
+        String url = "http://api.weatherapi.com/v1/forecast.json?key=f86140f8c3db4a2181791852231002&q=" + cityName + "&aqi=no";
         cityTV.setText(cityName);
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null
